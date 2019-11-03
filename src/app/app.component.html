@@ -1,32 +1,45 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
+<main class="main" [class.main--is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="main-toolbar">
+    <button
+      mat-icon-button
+      (click)="sideNavigation.toggle()"
+      aria-label="Open Navigation"
+    >
       <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="example-app-name">{{ title }}</h1>
+    <h1 class="main-appName">{{ title }}</h1>
   </mat-toolbar>
 
   <mat-sidenav-container
-    class="example-sidenav-container"
+    class="main-sideNavContainer"
     [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
   >
     <mat-sidenav
-      #snav
+      #sideNavigation
       [mode]="mobileQuery.matches ? 'over' : 'side'"
       [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56"
     >
-      <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">
-          {{ nav }}
+      <mat-nav-list aria-label="Navigation">
+        <a mat-list-item routerLink=".">
+          Home
+        </a>
+        <a mat-list-item routerLink=".">
+          Servants
+        </a>
+        <a mat-list-item routerLink=".">
+          Create Calendar
+        </a>
+        <a mat-list-item routerLink=".">
+          View Calendar
         </a>
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <p>Content</p>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
-</div>
+</main>
 
-<router-outlet></router-outlet>
+
