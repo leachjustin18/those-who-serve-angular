@@ -1,5 +1,5 @@
-<main class="main" [class.main--is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="main-toolbar">
+<main class="main" [class.main-isMobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="main--toolbar">
     <button
       mat-icon-button
       (click)="sideNavigation.toggle()"
@@ -7,11 +7,11 @@
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="main-appName">{{ title }}</h1>
+    <h1 class="main--appName">{{ title }}</h1>
   </mat-toolbar>
 
   <mat-sidenav-container
-    class="main-sideNavContainer"
+    class="main--sideNavContainer"
     [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
   >
     <mat-sidenav
@@ -21,7 +21,7 @@
       fixedTopGap="56"
     >
       <mat-nav-list aria-label="Navigation">
-        <a mat-list-item routerLink=".">
+        <a mat-list-item routerLink="." routerLinkActive="navigation-activeLink">
           Home
         </a>
         <a mat-list-item routerLink=".">
