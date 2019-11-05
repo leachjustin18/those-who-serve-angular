@@ -9,6 +9,8 @@ import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 export class AppComponent implements OnDestroy {
   title = 'Those Who Serve';
 
+  justin = 'this';
+
   mobileQuery: MediaQueryList;
 
   private mobileQueryListener: () => void;
