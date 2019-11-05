@@ -10,8 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write 'src/app/**/**.**'",
-    "tslint": "tslint 'src/app/**/**.ts' --fix"
+    "prettier": "prettier --write 'src/app/**/**.**'"
   },
   "dependencies": {
     "@angular/animations": "~8.2.9",
