@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write 'src/app/**/**.**'"
+    "prettier": "prettier --write 'src/app/**/**.**'",
+    "tslint": "tslint 'src/app/**/**.ts' --fix"
   },
   "dependencies": {
     "@angular/animations": "~8.2.9",
@@ -66,6 +67,9 @@
     "*.{ts,scss}": [
       "prettier --write",
       "git add"
+    ],
+    "*.ts": [
+      "tslint --fix"
     ]
   }
 }
