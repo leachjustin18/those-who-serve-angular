@@ -1,3 +1,5 @@
+@import './styles/toolkit';
+
 .main {
   display: flex;
   flex-direction: column;
@@ -24,7 +26,7 @@
 
 .main--title {
   color: white;
-  margin-left: 8px;
+  margin-left: pxToRem(8px);
   text-decoration: none;
 }
 
@@ -35,10 +37,10 @@
 }
 
 .sideNavContainer--activeLink {
-  background-color: #3f51b5;
-  color: white;
+  background-color: $primary-color;
+  color: $white;
 
   &:hover {
-    color: black;
+    color: $black;
   }
 }
