@@ -1,5 +1,9 @@
 {
-  "extends": "tslint:recommended",
+  //recommended
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier"
+  ],
   "rules": {
     "array-type": false,
     "arrow-parens": false,
