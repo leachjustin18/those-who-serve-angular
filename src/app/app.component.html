@@ -4,14 +4,15 @@
       mat-icon-button
       (click)="sideNavigation.toggle()"
       aria-label="Open Navigation"
+      role="button"
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="main--appName">{{ title }}</h1>
+    <h1 class="main--title" role="heading">{{ title }}</h1>
   </mat-toolbar>
 
   <mat-sidenav-container
-    class="main--sideNavContainer"
+    class="sideNavContainer"
     [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
   >
     <mat-sidenav
@@ -20,18 +21,21 @@
       [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56"
     >
-      <mat-nav-list aria-label="Navigation">
-        <a mat-list-item routerLink="." routerLinkActive="navigation-activeLink">
+      <mat-nav-list aria-label="Navigation" role="menu">
+        <a mat-list-item routerLink="." routerLinkActive="sideNavContainer--activeLink" (click)="sideNavigation.close()">
           Home
         </a>
-        <a mat-list-item routerLink=".">
+        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
           Servants
         </a>
-        <a mat-list-item routerLink=".">
+        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
           Create Calendar
         </a>
-        <a mat-list-item routerLink=".">
+        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
           View Calendar
+        </a>
+        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
+          Users
         </a>
       </mat-nav-list>
     </mat-sidenav>
