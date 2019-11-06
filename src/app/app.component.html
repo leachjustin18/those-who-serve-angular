@@ -1,9 +1,9 @@
 <main class="main" [class.main-isMobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="main--toolbar">
+  <mat-toolbar color="primary" class="toolbar">
     <button
       mat-icon-button
       (click)="sideNavigation.toggle()"
-      aria-label="Open Navigation"
+      aria-label="Toggle Navigation"
       role="button"
     >
       <mat-icon>menu</mat-icon>
@@ -15,6 +15,15 @@
       (click)="sideNavigation.close()"
       >{{ title }}
     </a>
+
+    <span class="toolbar--fillSpace"></span>
+
+    <button
+    mat-icon-button
+    role="button"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
   </mat-toolbar>
 
   <mat-sidenav-container

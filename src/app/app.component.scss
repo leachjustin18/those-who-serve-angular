@@ -11,7 +11,7 @@
 }
 
 .main-isMobile {
-  .main--toolbar {
+  .toolbar {
     position: fixed;
     /* Make sure the toolbar will stay on top of the content as it scrolls past. */
     z-index: 2;
@@ -22,6 +22,10 @@
        `<body>` to be our scrolling element for mobile layouts. */
     flex: 1 0 auto;
   }
+}
+
+.toolbar--fillSpace {
+  flex: 1 1 auto;
 }
 
 .main--title {
