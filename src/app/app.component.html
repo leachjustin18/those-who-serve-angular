@@ -39,13 +39,14 @@
       <mat-nav-list aria-label="Navigation" role="menu">
         <a
           mat-list-item
-          routerLink="."
+          routerLink="/"
+          [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="sideNavContainer--activeLink"
           (click)="sideNavigation.close()"
         >
           Home
         </a>
-        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
+        <a mat-list-item routerLink="/servants" routerLinkActive="sideNavContainer--activeLink" (click)="sideNavigation.close()">
           Servants
         </a>
         <a mat-list-item routerLink="." (click)="sideNavigation.close()">
