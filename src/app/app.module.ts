@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -31,7 +32,8 @@ import { environment } from '../environments/environment';
     MatButtonModule,
     RouterModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

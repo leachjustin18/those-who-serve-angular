@@ -1,1 +1,18 @@
-<p>servants works!</p>
+<h2 class="header">
+  Servants
+</h2>
+
+<mat-tab-group dynamicHeight>
+  <mat-tab label="View">
+    <div class="tabContent">
+      <li *ngFor="let item of items | async">
+        {{ item.name }}
+      </li>
+    </div>
+  </mat-tab>
+  <mat-tab label="Add">
+    <div class="tabContent">
+      Add
+    </div>
+  </mat-tab>
+</mat-tab-group>
