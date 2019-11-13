@@ -4,10 +4,7 @@ import {
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
-export interface Item {
-  name: string;
-}
+import { Item } from './servants.types';
 
 @Component({
   selector: 'app-servants',
@@ -16,9 +13,15 @@ export interface Item {
 })
 export class ServantsComponent {
   private collection: AngularFirestoreCollection<Item>;
-  items: Observable<Item[]>;
+  dataSource: Item[];
+
+  displayedColumns: string[] = ['name', 'actions'];
+
   constructor(private afs: AngularFirestore) {
     this.collection = afs.collection<Item>('servants');
-    this.items = this.collection.valueChanges();
+
+    this.collection.valueChanges().subscribe(servants => {
+      this.dataSource = servants;
+    });
   }
 }
