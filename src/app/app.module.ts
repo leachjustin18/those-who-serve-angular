@@ -11,6 +11,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -34,6 +35,7 @@ import { environment } from '../environments/environment';
     RouterModule,
     MatTabsModule,
     MatTableModule,
+    MatProgressBarModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
