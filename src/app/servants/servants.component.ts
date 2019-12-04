@@ -36,7 +36,6 @@ export class ServantsComponent implements OnInit {
     this.isLoading = true;
 
     this.collection.valueChanges().subscribe(servants => {
-      console.log('servants', servants);
       const sortedServants: Item[] = [...servants].sort();
 
       this.dataSource = new MatTableDataSource(sortedServants);
@@ -46,5 +45,15 @@ export class ServantsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  addServant() {
+    this.collection.add({
+      name: 'Ethan Shull',
+      jobList: ['Lords Table'],
+      previousJobs: [],
+      upcomingJobs: [],
+      notAvailable: []
+    });
   }
 }
