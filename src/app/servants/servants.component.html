@@ -8,8 +8,21 @@
 
 <mat-tab-group dynamicHeight *ngIf="isLoading === false">
   <mat-tab label="View">
+    <mat-form-field class="servants__filterContainer">
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+
     <div class="tabContent">
-      <mat-table [dataSource]="dataSource">
+      <mat-table
+        [dataSource]="dataSource"
+        matSort
+        matSortActive="name"
+        matSortDirection="desc"
+      >
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -18,8 +31,25 @@
 
         <ng-container matColumnDef="jobs">
           <mat-header-cell *matHeaderCellDef>Jobs</mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            Jobs
+          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+            <ul>
+              <li *ngFor="let jobs of element.jobList">{{ jobs }}</li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastJobs">
+          <mat-header-cell *matHeaderCellDef>Previous Job(s)</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+            <ul *ngFor="let previousJobs of element.previousJobs">
+              <li>
+                <strong>Job:</strong> {{ previousJobs.job }}
+                <div>
+                  <strong>Date:</strong>
+                  {{ previousJobs.date.seconds * 1000 | date: 'MM-dd-yyyy' }}
+                </div>
+              </li>
+            </ul>
           </mat-cell>
         </ng-container>
 

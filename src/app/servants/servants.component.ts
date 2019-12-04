@@ -4,6 +4,7 @@ import {
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 import { Item } from './servants.types';
 
 @Component({
@@ -16,9 +17,9 @@ export class ServantsComponent implements OnInit {
 
   public isLoading: boolean;
 
-  dataSource: Item[];
+  dataSource: MatTableDataSource<Item>;
 
-  displayedColumns: string[] = ['name', 'jobs', 'actions'];
+  displayedColumns: string[] = ['name', 'jobs', 'lastJobs', 'actions'];
 
   constructor(private afs: AngularFirestore) {}
 
@@ -28,8 +29,14 @@ export class ServantsComponent implements OnInit {
     this.isLoading = true;
 
     this.collection.valueChanges().subscribe(servants => {
-      this.dataSource = servants;
+      const sortedServants: Item[] = [...servants].sort();
+
+      this.dataSource = new MatTableDataSource(sortedServants);
       this.isLoading = false;
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

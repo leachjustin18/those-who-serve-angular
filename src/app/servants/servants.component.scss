@@ -1,0 +1,11 @@
+@import '../styles/toolkit';
+.servants {
+  &__cellBlock {
+    display: block;
+  }
+
+  &__filterContainer {
+    margin-top: pxToRem(16px);
+    width: 100%;
+  }
+}
