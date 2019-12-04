@@ -38,8 +38,23 @@
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="lastJobs">
-          <mat-header-cell *matHeaderCellDef>Previous Job(s)</mat-header-cell>
+        <ng-container matColumnDef="upcomingJobs">
+          <mat-header-cell *matHeaderCellDef>Upcoming Job(s)</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+            <ul *ngFor="let upcomingJobs of element.upcomingJobs">
+              <li>
+                <strong>Job:</strong> {{ upcomingJobs.job }}
+                <div>
+                  <strong>Date:</strong>
+                  {{ upcomingJobs.date.seconds * 1000 | date: 'MM-dd-yyyy' }}
+                </div>
+              </li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="previousJobs">
+          <mat-header-cell *matHeaderCellDef>Last month job(s)</mat-header-cell>
           <mat-cell *matCellDef="let element" class="servants__cellBlock">
             <ul *ngFor="let previousJobs of element.previousJobs">
               <li>
@@ -47,6 +62,20 @@
                 <div>
                   <strong>Date:</strong>
                   {{ previousJobs.date.seconds * 1000 | date: 'MM-dd-yyyy' }}
+                </div>
+              </li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="notAvailable">
+          <mat-header-cell *matHeaderCellDef>Not Available</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+            <ul>
+              <li *ngFor="let notAvailable of element.notAvailable">
+                <div>
+                  <strong>Date:</strong>
+                  {{ notAvailable.seconds * 1000 | date: 'MM-dd-yyyy' }}
                 </div>
               </li>
             </ul>

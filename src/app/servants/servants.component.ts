@@ -19,7 +19,14 @@ export class ServantsComponent implements OnInit {
 
   dataSource: MatTableDataSource<Item>;
 
-  displayedColumns: string[] = ['name', 'jobs', 'lastJobs', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'jobs',
+    'upcomingJobs',
+    'previousJobs',
+    'notAvailable',
+    'actions'
+  ];
 
   constructor(private afs: AngularFirestore) {}
 
@@ -29,6 +36,7 @@ export class ServantsComponent implements OnInit {
     this.isLoading = true;
 
     this.collection.valueChanges().subscribe(servants => {
+      console.log('servants', servants);
       const sortedServants: Item[] = [...servants].sort();
 
       this.dataSource = new MatTableDataSource(sortedServants);
@@ -36,7 +44,7 @@ export class ServantsComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
