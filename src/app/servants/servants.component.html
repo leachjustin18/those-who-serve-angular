@@ -12,13 +12,25 @@
       <input
         matInput
         (keyup)="applyFilter($event.target.value)"
-        placeholder="Filter"
+        placeholder="Filter by name"
+        [(value)]="filterValue"
       />
+      <button
+        *ngIf="filterValue"
+        mat-button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear Filter"
+        (click)="clearFilter()"
+        role="button"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
 
     <div class="tabContent">
       <mat-table
-        [dataSource]="dataSource"
+        [dataSource]="servants"
         matSort
         matSortActive="name"
         matSortDirection="desc"
@@ -89,7 +101,12 @@
               <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button aria-label="Delete User" role="button">
+            <button
+              mat-icon-button
+              aria-label="Delete User"
+              role="button"
+              (click)="deleteServant(row.id)"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </mat-cell>
