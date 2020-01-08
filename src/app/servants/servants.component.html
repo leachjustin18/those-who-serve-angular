@@ -8,7 +8,7 @@
 
 <mat-tab-group dynamicHeight *ngIf="isLoading === false">
   <mat-tab label="View">
-    <mat-form-field class="servants__filterContainer">
+    <mat-form-field class="viewServants__filterContainer">
       <input
         matInput
         (keyup)="applyFilter($event.target.value)"
@@ -43,7 +43,7 @@
 
         <ng-container matColumnDef="jobs">
           <mat-header-cell *matHeaderCellDef>Jobs</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
             <ul>
               <li *ngFor="let jobs of element.jobList">{{ jobs }}</li>
             </ul>
@@ -52,7 +52,7 @@
 
         <ng-container matColumnDef="upcomingJobs">
           <mat-header-cell *matHeaderCellDef>Upcoming Job(s)</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
             <ul *ngFor="let upcomingJobs of element.upcomingJobs">
               <li>
                 <strong>Job:</strong> {{ upcomingJobs.job }}
@@ -67,7 +67,7 @@
 
         <ng-container matColumnDef="previousJobs">
           <mat-header-cell *matHeaderCellDef>Last month job(s)</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
             <ul *ngFor="let previousJobs of element.previousJobs">
               <li>
                 <strong>Job:</strong> {{ previousJobs.job }}
@@ -82,7 +82,7 @@
 
         <ng-container matColumnDef="notAvailable">
           <mat-header-cell *matHeaderCellDef>Not Available</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="servants__cellBlock">
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
             <ul>
               <li *ngFor="let notAvailable of element.notAvailable">
                 <div>
@@ -119,6 +119,20 @@
   </mat-tab>
   <mat-tab label="Add">
     <div class="tabContent">
+      <form class="addServantForm">
+        <div class="addServantForm__fieldContainer">
+          <mat-form-field class="addServantForm__formField">
+            <input matInput placeholder="First name" />
+          </mat-form-field>
+
+          <mat-form-field class="addServantForm__formField">
+            <input matInput placeholder="Last Name" />
+          </mat-form-field>
+        </div>
+
+        Jobs Unaviable dates
+      </form>
+
       <button mat-raised-button color="primary" (click)="addServant()">
         Add Test Servant
       </button>
