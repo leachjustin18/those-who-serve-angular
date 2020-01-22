@@ -87,7 +87,7 @@
               <li *ngFor="let notAvailable of element.notAvailable">
                 <div>
                   <strong>Date:</strong>
-                  {{ notAvailable.seconds * 1000 | date: 'MM-dd-yyyy' }}
+                  {{ notAvailable }}
                 </div>
               </li>
             </ul>
@@ -119,23 +119,98 @@
   </mat-tab>
   <mat-tab label="Add">
     <div class="tabContent">
-      <form class="addServantForm">
+      <form
+        class="addServantForm"
+        [formGroup]="addServantForm"
+        (ngSubmit)="addServant(addServantForm.value)"
+      >
         <div class="addServantForm__fieldContainer">
           <mat-form-field class="addServantForm__formField">
-            <input matInput placeholder="First name" />
+            <input
+              matInput
+              placeholder="First name"
+              formControlName="firstName"
+            />
           </mat-form-field>
 
           <mat-form-field class="addServantForm__formField">
-            <input matInput placeholder="Last Name" />
+            <input
+              matInput
+              placeholder="Last Name"
+              formControlName="lastName"
+            />
           </mat-form-field>
         </div>
 
-        Jobs Unaviable dates
-      </form>
+        <div class="addServantForm__fieldContainer">
+          <mat-form-field>
+            <mat-label>Jobs</mat-label>
+            <mat-select formControlName="jobs" multiple name="jobs">
+              <mat-option
+                *ngFor="let job of jobList; let i = index"
+                [value]="job"
+                >{{ job }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="addServant()">
-        Add Test Servant
-      </button>
+          <div class="addServantForm__formField">
+            <div class="addServantForm__formField">
+              <mat-form-field class="addServantForm__formField">
+                <input
+                  [imask]="{ mask: '00/00/0000' }"
+                  matInput
+                  placeholder="Unavailable date"
+                  [(value)]="unavailableDatesValue"
+                  matInput="number"
+                  (keyup)="
+                    handleUnavailableDatesValueKeyUp($event.target.value)
+                  "
+                />
+                <button
+                  *ngIf="unavailableDatesValue"
+                  mat-button
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="clearUnavailableDatesValue()"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+            <button
+              mat-mini-fab
+              color="primary"
+              aria-label="Add unavailable date"
+              title="Add unavailable date"
+              (click)="addToUnavailableDates($event)"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+
+            <div *ngIf="unavailableDates.length">
+              <ul>
+                <li *ngFor="let unavailable of unavailableDates">
+                  <button
+                    mat-icon-button
+                    aria-label="Remove unavailable date"
+                    title="Remove unavailable date"
+                    (click)="hanleRemoveUnavilableDate(unavailable)"
+                  >
+                    <mat-icon>clear</mat-icon>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="addServant()">
+          Add Servant
+        </button>
+      </form>
     </div>
   </mat-tab>
 </mat-tab-group>
