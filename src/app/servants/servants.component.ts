@@ -5,8 +5,8 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Servant, ServantId } from './servants.types';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Servant, ServantId, ServantToAdd } from './servants.types';
 
 @Component({
   selector: 'app-servants',
@@ -111,11 +111,10 @@ export class ServantsComponent implements OnInit {
     this.filterValue = '';
   }
 
-  addToUnavailableDates(event) {
+  addToUnavailableDates(event: { preventDefault: () => void }) {
     event.preventDefault();
-    const date = this.unavailableDatesValue;
 
-    this.unavailableDates.push(date);
+    this.unavailableDates.push(this.unavailableDatesValue);
 
     this.clearUnavailableDatesValue();
   }
@@ -126,7 +125,7 @@ export class ServantsComponent implements OnInit {
     );
   }
 
-  addServant(servantData) {
+  addServant(servantData: ServantToAdd) {
     if (servantData) {
       const name = `${servantData.firstName} ${servantData.lastName}`;
 
