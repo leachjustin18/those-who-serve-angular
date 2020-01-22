@@ -193,6 +193,7 @@
             <div *ngIf="unavailableDates.length">
               <ul>
                 <li *ngFor="let unavailable of unavailableDates">
+                  {{ unavailable }}
                   <button
                     mat-icon-button
                     aria-label="Remove unavailable date"
