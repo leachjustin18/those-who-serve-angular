@@ -116,7 +116,7 @@ export class ServantsComponent implements OnInit {
     this.clearUnavailableDatesValue();
   }
 
-  hanleRemoveUnavilableDate(unavailable: string) {
+  handleRemoveUnavailableDate(unavailable: string) {
     this.unavailableDates = this.unavailableDates.filter(
       date => date !== unavailable
     );
