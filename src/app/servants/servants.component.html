@@ -119,6 +119,7 @@
   </mat-tab>
   <mat-tab label="Add">
     <div class="tabContent">
+      * Required
       <form
         class="addServantForm"
         [formGroup]="addServantForm"
@@ -128,23 +129,35 @@
           <mat-form-field class="addServantForm__formField">
             <input
               matInput
-              placeholder="First name"
+              placeholder="First name *"
               formControlName="firstName"
             />
+
+            <mat-error
+              *ngIf="addServantForm.controls['firstName'].hasError('required')"
+            >
+              First name is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="addServantForm__formField">
             <input
               matInput
-              placeholder="Last Name"
+              placeholder="Last Name *"
               formControlName="lastName"
             />
+
+            <mat-error
+              *ngIf="addServantForm.controls['lastName'].hasError('required')"
+            >
+              Last name is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
         </div>
 
         <div class="addServantForm__fieldContainer">
           <mat-form-field>
-            <mat-label>Jobs</mat-label>
+            <mat-label>Jobs *</mat-label>
             <mat-select formControlName="jobs" multiple name="jobs">
               <mat-option
                 *ngFor="let job of jobList; let i = index"
@@ -152,6 +165,11 @@
                 >{{ job }}</mat-option
               >
             </mat-select>
+            <mat-error
+              *ngIf="addServantForm.controls['jobs'].hasError('required')"
+            >
+              Job(s) is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
           <div class="addServantForm__formField">
@@ -208,7 +226,12 @@
           </div>
         </div>
 
-        <button mat-raised-button color="primary" (click)="addServant()">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!addServantForm.valid"
+          (click)="addServant()"
+        >
           Add Servant
         </button>
       </form>

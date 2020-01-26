@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Servant, ServantId, ServantToAdd } from './servants.types';
 
 @Component({
@@ -38,10 +38,7 @@ export class ServantsComponent implements OnInit {
 
   public jobList: string[];
 
-  constructor(
-    private afs: AngularFirestore,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private afs: AngularFirestore) {}
 
   ngOnInit() {
     this.servantCollection = this.afs.collection<ServantId>('servants');
@@ -71,10 +68,10 @@ export class ServantsComponent implements OnInit {
       'Wednesday Devotion'
     ];
 
-    this.addServantForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      jobs: []
+    this.addServantForm = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      jobs: new FormControl([], [Validators.required])
     });
   }
 
@@ -129,12 +126,16 @@ export class ServantsComponent implements OnInit {
     if (servantData) {
       const name = `${servantData.firstName} ${servantData.lastName}`;
 
+      const notAvailable = this.unavailableDates.length
+        ? this.unavailableDates
+        : [];
+
       this.servantCollection.add({
         name,
         jobList: servantData.jobs,
         previousJobs: [],
         upcomingJobs: [],
-        notAvailable: this.unavailableDates
+        notAvailable
       });
     }
   }
