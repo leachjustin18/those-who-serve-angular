@@ -181,10 +181,15 @@
                   placeholder="Unavailable date"
                   [(value)]="unavailableDatesValue"
                   matInput="number"
-                  (keyup)="
-                    handleUnavailableDatesValueKeyUp($event.target.value)
-                  "
+                  (blur)="handleBlurUnavailableDate()"
+                  [(ngModel)]="modelUnavailableDate"
+                  [ngModelOptions]="{ standalone: true }"
                 />
+
+                <mat-error>
+                  Date must be in the future
+                </mat-error>
+
                 <button
                   *ngIf="unavailableDatesValue"
                   mat-button
@@ -196,6 +201,9 @@
                   <mat-icon>clear</mat-icon>
                 </button>
               </mat-form-field>
+              <div *ngIf="!isUnavailableDateValid">
+                Please enter valid date
+              </div>
             </div>
 
             <button
@@ -204,6 +212,7 @@
               aria-label="Add unavailable date"
               title="Add unavailable date"
               (click)="addToUnavailableDates($event)"
+              *ngIf="isUnavailableDateValid"
             >
               <mat-icon>add</mat-icon>
             </button>

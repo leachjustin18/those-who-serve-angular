@@ -26,6 +26,10 @@ export class ServantsComponent implements OnInit {
 
   public unavailableDates: string[] = [];
   public unavailableDatesValue = '';
+  public isUnavailableDateValid = false;
+  public isUnavailableDateInThePast = false;
+  public isUnavailableDateDirty = false;
+  public modelUnavailableDate: string;
 
   public displayedColumns: string[] = [
     'name',
@@ -91,10 +95,6 @@ export class ServantsComponent implements OnInit {
     this.filterValue = filterValue;
   }
 
-  handleUnavailableDatesValueKeyUp(unavailableDatesValue: string) {
-    this.unavailableDatesValue = unavailableDatesValue;
-  }
-
   clearUnavailableDatesValue() {
     this.unavailableDatesValue = '';
   }
@@ -120,6 +120,26 @@ export class ServantsComponent implements OnInit {
     this.unavailableDates = this.unavailableDates.filter(
       date => date !== unavailable
     );
+  }
+
+  handleBlurUnavailableDate() {
+    this.isUnavailableDateDirty = true;
+
+    const isDateValid: Date = new Date(this.modelUnavailableDate);
+
+    if (
+      isDateValid instanceof Date &&
+      !isNaN(isDateValid.getTime()) &&
+      isDateValid.getTime() > new Date().getTime()
+    ) {
+      this.isUnavailableDateValid = true;
+      this.unavailableDatesValue = this.modelUnavailableDate;
+    } else if (isDateValid.getTime() <= new Date().getTime()) {
+      this.isUnavailableDateInThePast = true;
+      this.isUnavailableDateValid = false;
+    } else {
+      this.isUnavailableDateValid = false;
+    }
   }
 
   addServant(servantData: ServantToAdd) {
