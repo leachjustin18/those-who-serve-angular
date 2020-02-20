@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Servant, ServantId, ServantToAdd } from './servants.types';
+import { DateValidatorService } from '../date-validator.service';
 
 @Component({
   selector: 'app-servants',
@@ -27,9 +28,6 @@ export class ServantsComponent implements OnInit {
   public unavailableDates: string[] = [];
   public unavailableDatesValue = '';
   public isUnavailableDateValid = false;
-  public isUnavailableDateInThePast = false;
-  public isUnavailableDateDirty = false;
-  public modelUnavailableDate: string;
 
   public displayedColumns: string[] = [
     'name',
@@ -42,7 +40,10 @@ export class ServantsComponent implements OnInit {
 
   public jobList: string[];
 
-  constructor(private afs: AngularFirestore) {}
+  constructor(
+    private afs: AngularFirestore,
+    private DateValidator: DateValidatorService
+  ) {}
 
   ngOnInit() {
     this.servantCollection = this.afs.collection<ServantId>('servants');
@@ -73,9 +74,13 @@ export class ServantsComponent implements OnInit {
     ];
 
     this.addServantForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      jobs: new FormControl([], [Validators.required])
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      jobs: new FormControl([], Validators.required),
+      unavailable: new FormControl('', [
+        this.DateValidator.usaDate,
+        this.DateValidator.lessThenToday
+      ])
     });
   }
 
@@ -95,8 +100,10 @@ export class ServantsComponent implements OnInit {
     this.filterValue = filterValue;
   }
 
-  clearUnavailableDatesValue() {
+  clearUnavailableDatesValue(event: { preventDefault: () => void }) {
+    event.preventDefault();
     this.unavailableDatesValue = '';
+    this.setUnavailableDateIsValid(false);
   }
 
   deleteServant(id: string) {
@@ -113,7 +120,7 @@ export class ServantsComponent implements OnInit {
 
     this.unavailableDates.push(this.unavailableDatesValue);
 
-    this.clearUnavailableDatesValue();
+    this.clearUnavailableDatesValue(event);
   }
 
   handleRemoveUnavailableDate(unavailable: string) {
@@ -122,24 +129,20 @@ export class ServantsComponent implements OnInit {
     );
   }
 
-  handleBlurUnavailableDate() {
-    this.isUnavailableDateDirty = true;
-
-    const isDateValid: Date = new Date(this.modelUnavailableDate);
-
+  handleUnavailableOnBlur(event: { target: { value: string } }) {
     if (
-      isDateValid instanceof Date &&
-      !isNaN(isDateValid.getTime()) &&
-      isDateValid.getTime() > new Date().getTime()
+      this.addServantForm.controls.unavailable.valid &&
+      event.target.value.length
     ) {
-      this.isUnavailableDateValid = true;
-      this.unavailableDatesValue = this.modelUnavailableDate;
-    } else if (isDateValid.getTime() <= new Date().getTime()) {
-      this.isUnavailableDateInThePast = true;
-      this.isUnavailableDateValid = false;
+      this.setUnavailableDateIsValid(true);
+      this.unavailableDatesValue = event.target.value;
     } else {
-      this.isUnavailableDateValid = false;
+      this.setUnavailableDateIsValid(false);
     }
+  }
+
+  setUnavailableDateIsValid(value: boolean) {
+    this.isUnavailableDateValid = value;
   }
 
   addServant(servantData: ServantToAdd) {

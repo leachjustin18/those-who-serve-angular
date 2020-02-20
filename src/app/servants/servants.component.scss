@@ -22,4 +22,12 @@
   }
 
   width: 100%;
+
+  &__unavailableTitle {
+    font-size: pxToRem(16px);
+    font-weight: 300;
+    margin: 0;
+    padding: pxToRem(16px) pxToRem(16px) 0;
+    text-decoration: underline;
+  }
 }

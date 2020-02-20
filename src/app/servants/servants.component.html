@@ -181,29 +181,49 @@
                   placeholder="Unavailable date"
                   [(value)]="unavailableDatesValue"
                   matInput="number"
-                  (blur)="handleBlurUnavailableDate()"
-                  [(ngModel)]="modelUnavailableDate"
-                  [ngModelOptions]="{ standalone: true }"
+                  formControlName="unavailable"
+                  (blur)="handleUnavailableOnBlur($event)"
                 />
 
-                <mat-error>
-                  Date must be in the future
+                <mat-error
+                  *ngIf="
+                    addServantForm.controls['unavailable'].hasError(
+                      'usaDateError'
+                    ) &&
+                    !addServantForm.controls['unavailable'].hasError(
+                      'lessThenToday'
+                    )
+                  "
+                >
+                  Please enter a valid date
+                </mat-error>
+
+                <mat-error
+                  *ngIf="
+                    !addServantForm.controls['unavailable'].hasError(
+                      'usaDateError'
+                    ) &&
+                    addServantForm.controls['unavailable'].hasError(
+                      'lessThenToday'
+                    )
+                  "
+                >
+                  Date must be greater then today
                 </mat-error>
 
                 <button
-                  *ngIf="unavailableDatesValue"
+                  *ngIf="isUnavailableDateValid"
                   mat-button
                   matSuffix
                   mat-icon-button
-                  aria-label="Clear"
-                  (click)="clearUnavailableDatesValue()"
+                  aria-label="Clear unavailable date"
+                  title="Clear unavailable date"
+                  type="button"
+                  (click)="clearUnavailableDatesValue($event)"
                 >
                   <mat-icon>clear</mat-icon>
                 </button>
               </mat-form-field>
-              <div *ngIf="!isUnavailableDateValid">
-                Please enter valid date
-              </div>
             </div>
 
             <button
@@ -218,8 +238,11 @@
             </button>
 
             <div *ngIf="unavailableDates.length">
-              <ul>
-                <li *ngFor="let unavailable of unavailableDates">
+              <h4 class="addServantForm__unavailableTitle">
+                Unavailable Date(s)
+              </h4>
+              <mat-list>
+                <mat-list-item *ngFor="let unavailable of unavailableDates">
                   {{ unavailable }}
                   <button
                     mat-icon-button
@@ -227,10 +250,10 @@
                     title="Remove unavailable date"
                     (click)="handleRemoveUnavailableDate(unavailable)"
                   >
-                    <mat-icon>clear</mat-icon>
+                    <mat-icon>remove_circle_outline</mat-icon>
                   </button>
-                </li>
-              </ul>
+                </mat-list-item>
+              </mat-list>
             </div>
           </div>
         </div>
