@@ -122,8 +122,9 @@
       * Required
       <form
         class="addServantForm"
+        #myForm="ngForm"
         [formGroup]="addServantForm"
-        (ngSubmit)="addServant(addServantForm.value)"
+        (ngSubmit)="addServant(myForm, addServantForm.value)"
       >
         <div class="addServantForm__fieldContainer">
           <mat-form-field class="addServantForm__formField">

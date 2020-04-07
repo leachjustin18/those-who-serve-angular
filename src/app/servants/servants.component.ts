@@ -6,8 +6,9 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Servant, ServantId, ServantToAdd } from './servants.types';
 import { DateValidatorService } from '../date-validator.service';
 import { ClearUnavailableDateDialogComponent } from './clearUnavailableDateDialog.component';
@@ -31,6 +32,7 @@ export class ServantsComponent implements OnInit {
   public unavailableDates: string[] = [];
   public unavailableDatesValue = '';
   public isUnavailableDateValid = false;
+  private durationInSeconds = 5;
 
   public displayedColumns: string[] = [
     'name',
@@ -46,7 +48,8 @@ export class ServantsComponent implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private DateValidator: DateValidatorService,
-    public dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -143,8 +146,8 @@ export class ServantsComponent implements OnInit {
     this.isUnavailableDateValid = value;
   }
 
-  addServant(servantData: ServantToAdd) {
-    if (servantData) {
+  addServant(form: NgForm, servantData: ServantToAdd) {
+    if (form && servantData) {
       const name = `${servantData.firstName} ${servantData.lastName}`;
 
       const notAvailable = this.unavailableDates.length
@@ -158,6 +161,13 @@ export class ServantsComponent implements OnInit {
         upcomingJobs: [],
         notAvailable
       });
+
+      this.snackBar.open(`Servant ${name} added`, 'Dismiss', {
+        duration: this.durationInSeconds * 1000
+      });
+
+      form.resetForm();
+      this.unavailableDates = [];
     }
   }
 

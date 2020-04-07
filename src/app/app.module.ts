@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { IMaskModule } from 'angular-imask';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -55,6 +56,7 @@ import { environment } from '../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatSnackBarModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
