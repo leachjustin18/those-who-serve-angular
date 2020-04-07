@@ -17,17 +17,24 @@ import { MatInputModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { IMaskModule } from 'angular-imask';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ServantsComponent } from './servants/servants.component';
+import { ClearUnavailableDateDialogComponent } from './servants/clearUnavailableDateDialog.component';
 
 import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ServantsComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ServantsComponent,
+    ClearUnavailableDateDialogComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,11 +54,13 @@ import { environment } from '../environments/environment';
     IMaskModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
   providers: [],
+  entryComponents: [ClearUnavailableDateDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

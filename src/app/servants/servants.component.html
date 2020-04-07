@@ -227,14 +227,14 @@
             </div>
 
             <button
-              mat-mini-fab
+              mat-stroked-button
               color="primary"
               aria-label="Add unavailable date"
-              title="Add unavailable date"
+              title="Add Unavailable Date"
               (click)="addToUnavailableDates($event)"
               *ngIf="isUnavailableDateValid"
             >
-              <mat-icon>add</mat-icon>
+              Add Unavailable Date
             </button>
 
             <div *ngIf="unavailableDates.length">
@@ -248,7 +248,9 @@
                     mat-icon-button
                     aria-label="Remove unavailable date"
                     title="Remove unavailable date"
-                    (click)="handleRemoveUnavailableDate(unavailable)"
+                    (click)="
+                      openModuleToRemoveUnavailableDate($event, unavailable)
+                    "
                   >
                     <mat-icon>remove_circle_outline</mat-icon>
                   </button>

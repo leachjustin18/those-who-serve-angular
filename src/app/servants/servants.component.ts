@@ -5,9 +5,12 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Servant, ServantId, ServantToAdd } from './servants.types';
 import { DateValidatorService } from '../date-validator.service';
+import { ClearUnavailableDateDialogComponent } from './clearUnavailableDateDialog.component';
 
 @Component({
   selector: 'app-servants',
@@ -42,7 +45,8 @@ export class ServantsComponent implements OnInit {
 
   constructor(
     private afs: AngularFirestore,
-    private DateValidator: DateValidatorService
+    private DateValidator: DateValidatorService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -123,12 +127,6 @@ export class ServantsComponent implements OnInit {
     this.clearUnavailableDatesValue(event);
   }
 
-  handleRemoveUnavailableDate(unavailable: string) {
-    this.unavailableDates = this.unavailableDates.filter(
-      date => date !== unavailable
-    );
-  }
-
   handleUnavailableOnBlur(event: { target: { value: string } }) {
     if (
       this.addServantForm.controls.unavailable.valid &&
@@ -161,5 +159,23 @@ export class ServantsComponent implements OnInit {
         notAvailable
       });
     }
+  }
+
+  openModuleToRemoveUnavailableDate(
+    event: { preventDefault: () => void },
+    unavailable: string
+  ): void {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(ClearUnavailableDateDialogComponent, {
+      width: '250px',
+      data: { unavailable }
+    });
+
+    dialogRef.afterClosed().subscribe((unavailableDate: string) => {
+      this.unavailableDates = this.unavailableDates.filter(
+        date => date !== unavailableDate
+      );
+    });
   }
 }
