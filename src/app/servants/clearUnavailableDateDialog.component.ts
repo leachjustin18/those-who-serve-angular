@@ -13,7 +13,7 @@ export class ClearUnavailableDateDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<ClearUnavailableDateDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    private data: DialogData
+    public data: DialogData
   ) {}
 
   onNoClick(): void {
