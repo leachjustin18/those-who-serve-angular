@@ -114,10 +114,6 @@ export class ServantsComponent implements OnInit {
     this.setUnavailableDateIsValid(false);
   }
 
-  deleteServant(id: string) {
-    this.servantCollection.doc(id).delete();
-  }
-
   clearFilter() {
     this.servants = this.servantsConstant;
     this.filterValue = '';
