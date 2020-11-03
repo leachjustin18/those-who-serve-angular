@@ -9,9 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
-import { Servant, ServantId, ServantToAdd } from './servants.types';
+import { Servant, ServantWithId, ServantToAdd } from './servants.types';
 import { DateValidatorService } from '../date-validator.service';
 import { ClearUnavailableDateDialogComponent } from './clearUnavailableDateDialog.component';
+import { ClearServentDialogComponent } from './clear-servent-dialog.component';
 
 @Component({
   selector: 'app-servants',
@@ -19,10 +20,10 @@ import { ClearUnavailableDateDialogComponent } from './clearUnavailableDateDialo
   styleUrls: ['./servants.component.scss']
 })
 export class ServantsComponent implements OnInit {
-  public servants: Observable<ServantId[]>;
+  public servants: Observable<ServantWithId[]>;
 
   private servantCollection: AngularFirestoreCollection<Servant>;
-  private servantsConstant: Observable<ServantId[]>;
+  private servantsConstant: Observable<ServantWithId[]>;
 
   public isLoading: boolean;
   public filterValue = '';
@@ -53,7 +54,7 @@ export class ServantsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.servantCollection = this.afs.collection<ServantId>('servants');
+    this.servantCollection = this.afs.collection<ServantWithId>('servants');
 
     this.isLoading = true;
 
@@ -183,9 +184,24 @@ export class ServantsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((unavailableDate: string) => {
-      this.unavailableDates = this.unavailableDates.filter(
-        date => date !== unavailableDate
-      );
+      if (unavailableDate) {
+        this.unavailableDates = this.unavailableDates.filter(
+          date => date !== unavailableDate
+        );
+      }
+    });
+  }
+
+  openModuleToRemoveServant(servant: Servant) {
+    const dialogRef = this.dialog.open(ClearServentDialogComponent, {
+      width: '250px',
+      data: { servant }
+    });
+
+    dialogRef.afterClosed().subscribe((servantId: string) => {
+      if (servantId) {
+        this.servantCollection.doc(servantId).delete();
+      }
     });
   }
 }

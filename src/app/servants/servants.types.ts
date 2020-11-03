@@ -6,7 +6,7 @@ export type Servant = {
   notAvailable: string[];
 };
 
-export interface ServantId extends Servant {
+export interface ServantWithId extends Servant {
   id: string;
 }
 

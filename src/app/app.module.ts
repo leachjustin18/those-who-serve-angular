@@ -28,13 +28,15 @@ import { ServantsComponent } from './servants/servants.component';
 import { ClearUnavailableDateDialogComponent } from './servants/clearUnavailableDateDialog.component';
 
 import { environment } from '../environments/environment';
+import { ClearServentDialogComponent } from './servants/clear-servent-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ServantsComponent,
-    ClearUnavailableDateDialogComponent
+    ClearUnavailableDateDialogComponent,
+    ClearServentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,10 @@ import { environment } from '../environments/environment';
     AngularFirestoreModule
   ],
   providers: [],
-  entryComponents: [ClearUnavailableDateDialogComponent],
+  entryComponents: [
+    ClearUnavailableDateDialogComponent,
+    ClearServentDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
