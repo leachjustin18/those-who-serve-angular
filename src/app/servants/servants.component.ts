@@ -76,8 +76,8 @@ export class ServantsComponent implements OnInit {
       `Lord's Table`,
       'Usher',
       'Sunday Song Leader',
-      'Wednesday Song Leader',
       'Sunday Devotion',
+      'Wednesday Song Leader',
       'Wednesday Devotion'
     ];
 
