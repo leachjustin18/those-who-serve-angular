@@ -8,16 +8,36 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+import { IMaskModule } from 'angular-imask';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
+import { ServantsComponent } from './servants/servants.component';
+import { ClearUnavailableDateDialogComponent } from './servants/clearUnavailableDateDialog.component';
 
 import { environment } from '../environments/environment';
+import { ClearServentDialogComponent } from './servants/clear-servent-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ServantsComponent,
+    ClearUnavailableDateDialogComponent,
+    ClearServentDialogComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,10 +48,26 @@ import { environment } from '../environments/environment';
     MatListModule,
     MatButtonModule,
     RouterModule,
+    MatTabsModule,
+    MatTableModule,
+    MatProgressBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    IMaskModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatSnackBarModule,
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
   providers: [],
+  entryComponents: [
+    ClearUnavailableDateDialogComponent,
+    ClearServentDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

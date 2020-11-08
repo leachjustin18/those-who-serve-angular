@@ -1,0 +1,272 @@
+<h2 class="header">
+  Servants
+</h2>
+
+<div *ngIf="isLoading">
+  <mat-progress-bar mode="query"></mat-progress-bar>
+</div>
+
+<mat-tab-group dynamicHeight *ngIf="isLoading === false">
+  <mat-tab label="View">
+    <mat-form-field class="viewServants__filterContainer">
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Filter by name"
+        [(value)]="filterValue"
+      />
+      <button
+        *ngIf="filterValue"
+        mat-button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear Filter"
+        (click)="clearFilter()"
+        role="button"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="tabContent">
+      <mat-table
+        [dataSource]="servants"
+        matSort
+        matSortActive="name"
+        matSortDirection="desc"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="jobs">
+          <mat-header-cell *matHeaderCellDef>Jobs</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
+            <ul>
+              <li *ngFor="let jobs of element.jobList">{{ jobs }}</li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="upcomingJobs">
+          <mat-header-cell *matHeaderCellDef>Upcoming Job(s)</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
+            <ul *ngFor="let upcomingJobs of element.upcomingJobs">
+              <li>
+                <strong>Job:</strong> {{ upcomingJobs.job }}
+                <div>
+                  <strong>Date:</strong>
+                  {{ upcomingJobs.date.seconds * 1000 | date: 'MM-dd-yyyy' }}
+                </div>
+              </li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="previousJobs">
+          <mat-header-cell *matHeaderCellDef>Last month job(s)</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
+            <ul *ngFor="let previousJobs of element.previousJobs">
+              <li>
+                <strong>Job:</strong> {{ previousJobs.job }}
+                <div>
+                  <strong>Date:</strong>
+                  {{ previousJobs.date.seconds * 1000 | date: 'MM-dd-yyyy' }}
+                </div>
+              </li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="notAvailable">
+          <mat-header-cell *matHeaderCellDef>Not Available</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="viewServants__cellBlock">
+            <ul>
+              <li *ngFor="let notAvailable of element.notAvailable">
+                <div>
+                  <strong>Date:</strong>
+                  {{ notAvailable }}
+                </div>
+              </li>
+            </ul>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              aria-label="Delete User"
+              role="button"
+              (click)="openModuleToRemoveServant(row)"
+            >
+              <mat-icon>delete</mat-icon>
+              Delete User
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Add">
+    <div class="tabContent">
+      * Required
+      <form
+        class="addServantForm"
+        #myForm="ngForm"
+        [formGroup]="addServantForm"
+        (ngSubmit)="addServant(myForm, addServantForm.value)"
+      >
+        <div class="addServantForm__fieldContainer">
+          <mat-form-field class="addServantForm__formField">
+            <input
+              matInput
+              placeholder="First name *"
+              formControlName="firstName"
+            />
+
+            <mat-error
+              *ngIf="addServantForm.controls['firstName'].hasError('required')"
+            >
+              First name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="addServantForm__formField">
+            <input
+              matInput
+              placeholder="Last Name *"
+              formControlName="lastName"
+            />
+
+            <mat-error
+              *ngIf="addServantForm.controls['lastName'].hasError('required')"
+            >
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="addServantForm__fieldContainer">
+          <mat-form-field>
+            <mat-label>Job(s) *</mat-label>
+            <mat-select formControlName="jobs" multiple name="jobs">
+              <mat-option
+                *ngFor="let job of jobList; let i = index"
+                [value]="job"
+                >{{ job }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="addServantForm.controls['jobs'].hasError('required')"
+            >
+              Job(s) is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="addServantForm__formField">
+            <div class="addServantForm__formField">
+              <mat-form-field class="addServantForm__formField">
+                <input
+                  [imask]="{ mask: '00/00/0000' }"
+                  matInput
+                  placeholder="Unavailable date"
+                  [(value)]="unavailableDatesValue"
+                  matInput="number"
+                  formControlName="unavailable"
+                  (blur)="handleUnavailableOnBlur($event)"
+                />
+
+                <mat-error
+                  *ngIf="
+                    addServantForm.controls['unavailable'].hasError(
+                      'usaDateError'
+                    ) &&
+                    !addServantForm.controls['unavailable'].hasError(
+                      'lessThenToday'
+                    )
+                  "
+                >
+                  Please enter a valid date
+                </mat-error>
+
+                <mat-error
+                  *ngIf="
+                    !addServantForm.controls['unavailable'].hasError(
+                      'usaDateError'
+                    ) &&
+                    addServantForm.controls['unavailable'].hasError(
+                      'lessThenToday'
+                    )
+                  "
+                >
+                  Date must be greater then today
+                </mat-error>
+
+                <button
+                  *ngIf="isUnavailableDateValid"
+                  mat-button
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear unavailable date"
+                  title="Clear unavailable date"
+                  type="button"
+                  (click)="clearUnavailableDatesValue($event)"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+            <button
+              mat-stroked-button
+              color="primary"
+              aria-label="Add unavailable date"
+              title="Add Unavailable Date"
+              (click)="addToUnavailableDates($event)"
+              *ngIf="isUnavailableDateValid"
+            >
+              Add Unavailable Date
+            </button>
+
+            <div *ngIf="unavailableDates.length">
+              <h4 class="addServantForm__unavailableTitle">
+                Unavailable Date(s)
+              </h4>
+              <mat-list>
+                <mat-list-item *ngFor="let unavailable of unavailableDates">
+                  {{ unavailable }}
+                  <button
+                    mat-icon-button
+                    aria-label="Remove unavailable date"
+                    title="Remove unavailable date"
+                    (click)="
+                      openModuleToRemoveUnavailableDate($event, unavailable)
+                    "
+                  >
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!addServantForm.valid"
+          (click)="addServant()"
+        >
+          Add Servant
+        </button>
+      </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,17 @@
+<div mat-dialog-content>
+  <p>
+    Are you sure you want to delete servant:
+    <strong>{{ data.servant.name }}</strong>
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No</button>
+  <button
+    mat-button
+    [mat-dialog-close]="data.servant.id"
+    color="warn"
+    cdkFocusInitial
+  >
+    Yes
+  </button>
+</div>
