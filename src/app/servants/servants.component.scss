@@ -9,25 +9,3 @@
     width: 100%;
   }
 }
-
-.addServantForm {
-  &__fieldContainer {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: pxToRem(16px);
-  }
-
-  &__formField {
-    width: 100%;
-  }
-
-  width: 100%;
-
-  &__unavailableTitle {
-    font-size: pxToRem(16px);
-    font-weight: 300;
-    margin: 0;
-    padding: pxToRem(16px) pxToRem(16px) 0;
-    text-decoration: underline;
-  }
-}

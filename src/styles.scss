@@ -11,12 +11,36 @@ body {
 }
 
 .header {
+  border-bottom: pxToRem(1px) solid black;
   font-size: pxToRem(32px);
   font-weight: 300;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: pxToRem(16px);
   padding-bottom: pxToRem(16px);
 }
 
 .tabContent {
   padding: pxToRem(8px) 0 pxToRem(8px);
+}
+
+.addServantForm {
+  &__fieldContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: pxToRem(16px);
+  }
+
+  &__formField {
+    width: 100%;
+  }
+
+  width: 100%;
+
+  &__unavailableTitle {
+    font-size: pxToRem(16px);
+    font-weight: 300;
+    margin: 0;
+    padding: pxToRem(16px) pxToRem(16px) 0;
+    text-decoration: underline;
+  }
 }

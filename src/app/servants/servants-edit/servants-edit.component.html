@@ -1,1 +1,22 @@
-<p>servants-edit works!</p>
+<h2 class="header">Editing: {{ (item | async)?.name }}</h2>
+
+<a routerLink="/servants">Back to Servants</a>
+
+<form class="addServantForm" #myForm="ngForm" [formGroup]="editServantForm">
+  <mat-form-field class="addServantForm__formField">
+    <input
+      matInput
+      placeholder="Name *"
+      formControlName="name"
+      [value]="(item | async)?.name"
+    />
+
+    <mat-error *ngIf="editServantForm.controls['name'].hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div *ngFor="let job of (item | async)?.jobList">
+    {{ job }}
+  </div>
+</form>
