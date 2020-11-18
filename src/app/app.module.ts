@@ -29,6 +29,7 @@ import { ClearUnavailableDateDialogComponent } from './servants/clearUnavailable
 
 import { environment } from '../environments/environment';
 import { ClearServentDialogComponent } from './servants/clear-servent-dialog.component';
+import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ClearServentDialogComponent } from './servants/clear-servent-dialog.com
     HomeComponent,
     ServantsComponent,
     ClearUnavailableDateDialogComponent,
-    ClearServentDialogComponent
+    ClearServentDialogComponent,
+    CreateScheduleComponent
   ],
   imports: [
     BrowserModule,

@@ -51,15 +51,19 @@
         >
           Servants
         </a>
-        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
-          Create Calendar
+        <a
+          mat-list-item
+          routerLink="/create-schedule"
+          (click)="sideNavigation.close()"
+        >
+          Create Schedule
         </a>
         <a mat-list-item routerLink="." (click)="sideNavigation.close()">
           View Calendar
         </a>
-        <a mat-list-item routerLink="." (click)="sideNavigation.close()">
+        <!-- <a mat-list-item routerLink="." (click)="sideNavigation.close()">
           Users
-        </a>
+        </a> -->
       </mat-nav-list>
     </mat-sidenav>
 
