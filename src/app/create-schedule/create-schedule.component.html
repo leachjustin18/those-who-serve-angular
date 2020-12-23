@@ -8,3 +8,12 @@
   <li>Select the month you want to create a schedule for.</li>
   <li>Press the <em>Create Schedule</em> button.</li>
 </ul>
+
+<mat-form-field appearance="fill">
+  <mat-label>Select Upcoming Month</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let date of dates" [value]="date.value">
+      {{ date.viewValue }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
